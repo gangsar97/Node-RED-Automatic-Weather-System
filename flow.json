@@ -1,0 +1,822 @@
+[
+    {
+        "id": "64acc005fd122c55",
+        "type": "tab",
+        "label": "PROEJCT : Automatic Weather System",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e7e035e1ccc68925",
+        "type": "group",
+        "z": "64acc005fd122c55",
+        "name": "membaca data dari sensor",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "9bdbcdb0ad085775",
+            "976573aa00157f44",
+            "dd1caccc71981d5d",
+            "d24f88e60b6d5a86"
+        ],
+        "x": 94,
+        "y": 79,
+        "w": 912,
+        "h": 82
+    },
+    {
+        "id": "6c690546b7ce4f8d",
+        "type": "group",
+        "z": "64acc005fd122c55",
+        "name": "merespon pesan untuk cek kondisi",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "833531f935eac636",
+            "672fa5ceabbe4533",
+            "5ccc29296d8ab0d4",
+            "3e1bbcc0e22c4e62",
+            "1ea24211ecab917c",
+            "2b41f4c0391493cb",
+            "b5d6ade19b099c2e",
+            "f2d8f998d2281ce2",
+            "c5dad0645567ede3",
+            "1401752bedb3b6c4"
+        ],
+        "x": 94,
+        "y": 199,
+        "w": 1612,
+        "h": 142
+    },
+    {
+        "id": "91ecf4b2f71a414f",
+        "type": "group",
+        "z": "64acc005fd122c55",
+        "name": "merubah nilai ambang batas ketinggian air",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "4f8eea7a8ab9b17f",
+            "08bf085b6829354b",
+            "9cc78fbb31414545",
+            "52829b0662677095",
+            "610bee8758b0d1aa",
+            "ab207fa3fb69eb5e"
+        ],
+        "x": 94,
+        "y": 379,
+        "w": 1252,
+        "h": 82
+    },
+    {
+        "id": "fd757ba2a5e192a7",
+        "type": "group",
+        "z": "64acc005fd122c55",
+        "name": "mengirim peringatan jika jarak air ke permukaan kurang dari ambang batas",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "5757c42b1c8b4fd9",
+            "a36c0fa153140cf9",
+            "cdeaa5f19c686ada",
+            "2d0cdd57716349c8",
+            "275422f73fd8c27e",
+            "a924eb9c27eb9cc6",
+            "cfcad4dce561658b",
+            "62025cbb959c548d",
+            "1ecb6651688b1727",
+            "1fb95e8e0b99ed30",
+            "48ad455ef84d0b7d"
+        ],
+        "x": 94,
+        "y": 519,
+        "w": 1652,
+        "h": 142
+    },
+    {
+        "id": "9bdbcdb0ad085775",
+        "type": "inject",
+        "z": "64acc005fd122c55",
+        "g": "e7e035e1ccc68925",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 120,
+        "wires": [
+            [
+                "dd1caccc71981d5d"
+            ]
+        ]
+    },
+    {
+        "id": "976573aa00157f44",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "e7e035e1ccc68925",
+        "name": "simpan ke database",
+        "func": "var temperature = msg.payload[0]/10;\nvar humidity = msg.payload[1]/10;\nvar distanceCm = msg.payload[2];\nvar timestamp = Math.floor(Date.now()/1000);\n\n//flow.set(\"temperature\" , temperature);\n//flow.set(\"humidity\", humidity);\n//flow.set(\"distance\", distanceCm);\n\nmsg.topic = \"INSERT INTO monitoring(temperature, humidity, distance,timestamp) VALUES(\"+temperature+\",\"+humidity+\",\"+distanceCm+\",\"+timestamp+\")\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 120,
+        "wires": [
+            [
+                "d24f88e60b6d5a86"
+            ]
+        ]
+    },
+    {
+        "id": "833531f935eac636",
+        "type": "telegram sender",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "",
+        "bot": "bee52fa1e5935705",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1390,
+        "y": 280,
+        "wires": [
+            [
+                "2b41f4c0391493cb"
+            ]
+        ]
+    },
+    {
+        "id": "672fa5ceabbe4533",
+        "type": "telegram command",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "",
+        "command": "/ceksituasi",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "bee52fa1e5935705",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 180,
+        "y": 260,
+        "wires": [
+            [
+                "3e1bbcc0e22c4e62",
+                "1401752bedb3b6c4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5ccc29296d8ab0d4",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "membuat pesan telegram",
+        "func": "var temperature = msg.payload[0][0].temperature;\nvar humidity = msg.payload[0][0].humidity;\nvar distanceCm = msg.payload[0][0].distance;\nvar threshold = msg.payload[1][0].threshold;\n\nvar timestamp = new Date(msg.payload[0][0].timestamp*1000);\n\n\nmsg.payload = {\n\"content\" : \"AUTOMATIC WEATHER SYSTEM\\nBootcamp edutic.id batch2\\n\\nSuhu : \"+temperature+\" °C\\nHumidity : \"+humidity+\"%RH\\nJarak air ke permukaan : \"+distanceCm+\" Cm\\nAmbang batas jarak Air: \"+threshold+\" Cm\\nWaktu Setempat: \"+timestamp+\"\",\n\"chatId\" : 1248251919,\n\"type\" : \"message\"\n};\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1150,
+        "y": 280,
+        "wires": [
+            [
+                "833531f935eac636"
+            ]
+        ]
+    },
+    {
+        "id": "dd1caccc71981d5d",
+        "type": "modbus-getter",
+        "z": "64acc005fd122c55",
+        "g": "e7e035e1ccc68925",
+        "name": "",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "1",
+        "dataType": "InputRegister",
+        "adr": "1",
+        "quantity": "3",
+        "server": "73b34ca166045d79",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 400,
+        "y": 120,
+        "wires": [
+            [
+                "976573aa00157f44"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4f8eea7a8ab9b17f",
+        "type": "telegram command",
+        "z": "64acc005fd122c55",
+        "g": "91ecf4b2f71a414f",
+        "name": "",
+        "command": "/setbatasjarak",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "bee52fa1e5935705",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 190,
+        "y": 420,
+        "wires": [
+            [
+                "08bf085b6829354b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "08bf085b6829354b",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "91ecf4b2f71a414f",
+        "name": "set ambang batas",
+        "func": "var threshold = msg.payload.content;\n\nmsg.topic = \"UPDATE setting SET threshold=\"+threshold+\" WHERE id=1\";\nmsg.payload = threshold;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 420,
+        "wires": [
+            [
+                "9cc78fbb31414545"
+            ]
+        ]
+    },
+    {
+        "id": "5757c42b1c8b4fd9",
+        "type": "inject",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 210,
+        "y": 560,
+        "wires": [
+            [
+                "a36c0fa153140cf9",
+                "48ad455ef84d0b7d"
+            ]
+        ]
+    },
+    {
+        "id": "a36c0fa153140cf9",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "akses nilai distance terupdate ",
+        "func": "msg.topic = \"SELECT distance from monitoring ORDER BY id DESC LIMIT 1\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 450,
+        "y": 560,
+        "wires": [
+            [
+                "a924eb9c27eb9cc6"
+            ]
+        ]
+    },
+    {
+        "id": "cdeaa5f19c686ada",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "akses nilai ambang batas",
+        "func": "msg.topic = \"SELECT threshold FROM setting WHERE id=1\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 620,
+        "wires": [
+            [
+                "275422f73fd8c27e"
+            ]
+        ]
+    },
+    {
+        "id": "2d0cdd57716349c8",
+        "type": "join",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "payload[0]",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 850,
+        "y": 580,
+        "wires": [
+            [
+                "cfcad4dce561658b"
+            ]
+        ]
+    },
+    {
+        "id": "d24f88e60b6d5a86",
+        "type": "mysql",
+        "z": "64acc005fd122c55",
+        "g": "e7e035e1ccc68925",
+        "mydb": "b92b8afd826cdbf6",
+        "name": "",
+        "x": 900,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9cc78fbb31414545",
+        "type": "mysql",
+        "z": "64acc005fd122c55",
+        "g": "91ecf4b2f71a414f",
+        "mydb": "b92b8afd826cdbf6",
+        "name": "",
+        "x": 620,
+        "y": 420,
+        "wires": [
+            [
+                "52829b0662677095"
+            ]
+        ]
+    },
+    {
+        "id": "275422f73fd8c27e",
+        "type": "mysql",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "mydb": "b92b8afd826cdbf6",
+        "name": "",
+        "x": 680,
+        "y": 620,
+        "wires": [
+            [
+                "2d0cdd57716349c8"
+            ]
+        ]
+    },
+    {
+        "id": "a924eb9c27eb9cc6",
+        "type": "mysql",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "mydb": "b92b8afd826cdbf6",
+        "name": "",
+        "x": 680,
+        "y": 560,
+        "wires": [
+            [
+                "2d0cdd57716349c8"
+            ]
+        ]
+    },
+    {
+        "id": "3e1bbcc0e22c4e62",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "akses data monitoring",
+        "func": "msg.topic = \"SELECT * from monitoring ORDER BY id DESC LIMIT 1\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 240,
+        "wires": [
+            [
+                "1ea24211ecab917c"
+            ]
+        ]
+    },
+    {
+        "id": "1ea24211ecab917c",
+        "type": "mysql",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "mydb": "b92b8afd826cdbf6",
+        "name": "",
+        "x": 720,
+        "y": 240,
+        "wires": [
+            [
+                "c5dad0645567ede3"
+            ]
+        ]
+    },
+    {
+        "id": "cfcad4dce561658b",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "kirim pesan peringatan ",
+        "func": "var distance = msg.payload[0][0].distance;\nvar threshold = msg.payload[1][0].threshold;\n\nif (distance <= threshold){\n    msg.payload = {\n        \"chatId\" :1248251919,\n        \"type\" : \"message\" ,\n        \"content\" : \"Jarak air mendekati permukaan!!\"\n    };\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 580,
+        "wires": [
+            [
+                "62025cbb959c548d"
+            ]
+        ]
+    },
+    {
+        "id": "62025cbb959c548d",
+        "type": "delay",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "10",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 1260,
+        "y": 580,
+        "wires": [
+            [
+                "1ecb6651688b1727"
+            ]
+        ]
+    },
+    {
+        "id": "1ecb6651688b1727",
+        "type": "telegram sender",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "",
+        "bot": "bee52fa1e5935705",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1450,
+        "y": 580,
+        "wires": [
+            [
+                "1fb95e8e0b99ed30"
+            ]
+        ]
+    },
+    {
+        "id": "52829b0662677095",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "91ecf4b2f71a414f",
+        "name": "feedback ke user",
+        "func": "msg.payload = {\n    \"chatId\": 1248251919 ,\n    \"type\" : \"message\",\n    \"content\" : \"Perubahan ambang batas jarak Sukses\"\n}\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 850,
+        "y": 420,
+        "wires": [
+            [
+                "610bee8758b0d1aa"
+            ]
+        ]
+    },
+    {
+        "id": "610bee8758b0d1aa",
+        "type": "telegram sender",
+        "z": "64acc005fd122c55",
+        "g": "91ecf4b2f71a414f",
+        "name": "",
+        "bot": "bee52fa1e5935705",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1070,
+        "y": 420,
+        "wires": [
+            [
+                "ab207fa3fb69eb5e"
+            ]
+        ]
+    },
+    {
+        "id": "2b41f4c0391493cb",
+        "type": "debug",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1600,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "ab207fa3fb69eb5e",
+        "type": "debug",
+        "z": "64acc005fd122c55",
+        "g": "91ecf4b2f71a414f",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1240,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "1fb95e8e0b99ed30",
+        "type": "debug",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "debug 5",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1640,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "b5d6ade19b099c2e",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "akses data setting",
+        "func": "msg.topic = \"SELECT threshold from setting ORDER BY id DESC LIMIT 1\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 300,
+        "wires": [
+            [
+                "f2d8f998d2281ce2"
+            ]
+        ]
+    },
+    {
+        "id": "f2d8f998d2281ce2",
+        "type": "mysql",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "mydb": "b92b8afd826cdbf6",
+        "name": "",
+        "x": 720,
+        "y": 300,
+        "wires": [
+            [
+                "c5dad0645567ede3"
+            ]
+        ]
+    },
+    {
+        "id": "c5dad0645567ede3",
+        "type": "join",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 910,
+        "y": 280,
+        "wires": [
+            [
+                "5ccc29296d8ab0d4"
+            ]
+        ]
+    },
+    {
+        "id": "48ad455ef84d0b7d",
+        "type": "delay",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 230,
+        "y": 620,
+        "wires": [
+            [
+                "cdeaa5f19c686ada"
+            ]
+        ]
+    },
+    {
+        "id": "1401752bedb3b6c4",
+        "type": "delay",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "milliseconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "b5d6ade19b099c2e"
+            ]
+        ]
+    },
+    {
+        "id": "bee52fa1e5935705",
+        "type": "telegram bot",
+        "botname": "Bot_coba2",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    },
+    {
+        "id": "73b34ca166045d79",
+        "type": "modbus-client",
+        "name": "",
+        "clienttype": "serial",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "COM7",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "1",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "b92b8afd826cdbf6",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "aws_database",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]
