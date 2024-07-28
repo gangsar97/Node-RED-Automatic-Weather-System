@@ -1,2 +1,2 @@
-Sistem pemantauan Cuaca menggunakan Node-RED dan aplikasi Telegram
+Sistem pemantauan Cuaca dan peringatan dini bencana menggunakan Node-RED dan aplikasi Telegram
 
