@@ -47,7 +47,7 @@
             "1401752bedb3b6c4"
         ],
         "x": 94,
-        "y": 199,
+        "y": 399,
         "w": 1612,
         "h": 142
     },
@@ -68,7 +68,7 @@
             "ab207fa3fb69eb5e"
         ],
         "x": 94,
-        "y": 379,
+        "y": 579,
         "w": 1252,
         "h": 82
     },
@@ -94,9 +94,28 @@
             "48ad455ef84d0b7d"
         ],
         "x": 94,
-        "y": 519,
+        "y": 719,
         "w": 1652,
         "h": 142
+    },
+    {
+        "id": "2e27690dcbb01c8e",
+        "type": "group",
+        "z": "64acc005fd122c55",
+        "name": "guide chat",
+        "style": {
+            "label": true
+        },
+        "nodes": [
+            "a346e525378109f4",
+            "95ca4ffbc37e5782",
+            "645f31908d16f133",
+            "eea48c1df230d12a"
+        ],
+        "x": 94,
+        "y": 239,
+        "w": 872,
+        "h": 82
     },
     {
         "id": "9bdbcdb0ad085775",
@@ -137,7 +156,7 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 640,
+        "x": 660,
         "y": 120,
         "wires": [
             [
@@ -155,7 +174,7 @@
         "haserroroutput": false,
         "outputs": 1,
         "x": 1390,
-        "y": 280,
+        "y": 480,
         "wires": [
             [
                 "2b41f4c0391493cb"
@@ -180,7 +199,7 @@
         "removeregexcommand": false,
         "outputs": 2,
         "x": 180,
-        "y": 260,
+        "y": 460,
         "wires": [
             [
                 "3e1bbcc0e22c4e62",
@@ -203,7 +222,7 @@
         "finalize": "",
         "libs": [],
         "x": 1150,
-        "y": 280,
+        "y": 480,
         "wires": [
             [
                 "833531f935eac636"
@@ -228,7 +247,7 @@
         "useIOFile": false,
         "ioFile": "",
         "useIOForPayload": false,
-        "emptyMsgOnFail": false,
+        "emptyMsgOnFail": true,
         "keepMsgProperties": false,
         "delayOnStart": false,
         "startDelayTime": "",
@@ -259,7 +278,7 @@
         "removeregexcommand": false,
         "outputs": 2,
         "x": 190,
-        "y": 420,
+        "y": 620,
         "wires": [
             [
                 "08bf085b6829354b"
@@ -281,7 +300,7 @@
         "finalize": "",
         "libs": [],
         "x": 390,
-        "y": 420,
+        "y": 620,
         "wires": [
             [
                 "9cc78fbb31414545"
@@ -311,7 +330,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 210,
-        "y": 560,
+        "y": 760,
         "wires": [
             [
                 "a36c0fa153140cf9",
@@ -333,7 +352,7 @@
         "finalize": "",
         "libs": [],
         "x": 450,
-        "y": 560,
+        "y": 760,
         "wires": [
             [
                 "a924eb9c27eb9cc6"
@@ -354,7 +373,7 @@
         "finalize": "",
         "libs": [],
         "x": 430,
-        "y": 620,
+        "y": 820,
         "wires": [
             [
                 "275422f73fd8c27e"
@@ -383,7 +402,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 850,
-        "y": 580,
+        "y": 780,
         "wires": [
             [
                 "cfcad4dce561658b"
@@ -411,7 +430,7 @@
         "mydb": "b92b8afd826cdbf6",
         "name": "",
         "x": 620,
-        "y": 420,
+        "y": 620,
         "wires": [
             [
                 "52829b0662677095"
@@ -426,7 +445,7 @@
         "mydb": "b92b8afd826cdbf6",
         "name": "",
         "x": 680,
-        "y": 620,
+        "y": 820,
         "wires": [
             [
                 "2d0cdd57716349c8"
@@ -441,7 +460,7 @@
         "mydb": "b92b8afd826cdbf6",
         "name": "",
         "x": 680,
-        "y": 560,
+        "y": 760,
         "wires": [
             [
                 "2d0cdd57716349c8"
@@ -462,7 +481,7 @@
         "finalize": "",
         "libs": [],
         "x": 380,
-        "y": 240,
+        "y": 440,
         "wires": [
             [
                 "1ea24211ecab917c"
@@ -477,7 +496,7 @@
         "mydb": "b92b8afd826cdbf6",
         "name": "",
         "x": 720,
-        "y": 240,
+        "y": 440,
         "wires": [
             [
                 "c5dad0645567ede3"
@@ -498,7 +517,7 @@
         "finalize": "",
         "libs": [],
         "x": 1040,
-        "y": 580,
+        "y": 780,
         "wires": [
             [
                 "62025cbb959c548d"
@@ -524,7 +543,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 1260,
-        "y": 580,
+        "y": 780,
         "wires": [
             [
                 "1ecb6651688b1727"
@@ -541,7 +560,7 @@
         "haserroroutput": false,
         "outputs": 1,
         "x": 1450,
-        "y": 580,
+        "y": 780,
         "wires": [
             [
                 "1fb95e8e0b99ed30"
@@ -562,7 +581,7 @@
         "finalize": "",
         "libs": [],
         "x": 850,
-        "y": 420,
+        "y": 620,
         "wires": [
             [
                 "610bee8758b0d1aa"
@@ -579,7 +598,7 @@
         "haserroroutput": false,
         "outputs": 1,
         "x": 1070,
-        "y": 420,
+        "y": 620,
         "wires": [
             [
                 "ab207fa3fb69eb5e"
@@ -600,7 +619,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1600,
-        "y": 280,
+        "y": 480,
         "wires": []
     },
     {
@@ -617,7 +636,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1240,
-        "y": 420,
+        "y": 620,
         "wires": []
     },
     {
@@ -634,7 +653,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 1640,
-        "y": 580,
+        "y": 780,
         "wires": []
     },
     {
@@ -651,7 +670,7 @@
         "finalize": "",
         "libs": [],
         "x": 530,
-        "y": 300,
+        "y": 500,
         "wires": [
             [
                 "f2d8f998d2281ce2"
@@ -666,7 +685,7 @@
         "mydb": "b92b8afd826cdbf6",
         "name": "",
         "x": 720,
-        "y": 300,
+        "y": 500,
         "wires": [
             [
                 "c5dad0645567ede3"
@@ -695,7 +714,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 910,
-        "y": 280,
+        "y": 480,
         "wires": [
             [
                 "5ccc29296d8ab0d4"
@@ -721,7 +740,7 @@
         "allowrate": false,
         "outputs": 1,
         "x": 230,
-        "y": 620,
+        "y": 820,
         "wires": [
             [
                 "cdeaa5f19c686ada"
@@ -747,12 +766,93 @@
         "allowrate": false,
         "outputs": 1,
         "x": 350,
-        "y": 300,
+        "y": 500,
         "wires": [
             [
                 "b5d6ade19b099c2e"
             ]
         ]
+    },
+    {
+        "id": "a346e525378109f4",
+        "type": "telegram command",
+        "z": "64acc005fd122c55",
+        "g": "2e27690dcbb01c8e",
+        "name": "",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "bee52fa1e5935705",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "95ca4ffbc37e5782"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "95ca4ffbc37e5782",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "2e27690dcbb01c8e",
+        "name": "pesan untuk guide user",
+        "func": "msg.payload = {\n    \"chatId\" : 1248251919,\n    \"type\" : \"message\",\n    \"content\" : \"AUTOMATIC WEATHER SYSTEM \\nBootcamp Edutic.id Batch 2 \\n\\nGunakan perintah berikut:\\n\\n/ceksituasi untuk mendapatkan informasi tentang data pembacaan sensor \\n\\n/setbatasjarak (spasi)(nilai dalam satuan Cm) untuk merubah nilai ambang batas jarak air dengan permukaan sungai\"\n\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "645f31908d16f133"
+            ]
+        ]
+    },
+    {
+        "id": "645f31908d16f133",
+        "type": "telegram sender",
+        "z": "64acc005fd122c55",
+        "g": "2e27690dcbb01c8e",
+        "name": "",
+        "bot": "bee52fa1e5935705",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 670,
+        "y": 280,
+        "wires": [
+            [
+                "eea48c1df230d12a"
+            ]
+        ]
+    },
+    {
+        "id": "eea48c1df230d12a",
+        "type": "debug",
+        "z": "64acc005fd122c55",
+        "g": "2e27690dcbb01c8e",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 280,
+        "wires": []
     },
     {
         "id": "bee52fa1e5935705",
