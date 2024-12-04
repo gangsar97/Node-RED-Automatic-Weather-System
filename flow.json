@@ -19,11 +19,12 @@
             "9bdbcdb0ad085775",
             "976573aa00157f44",
             "dd1caccc71981d5d",
-            "d24f88e60b6d5a86"
+            "d24f88e60b6d5a86",
+            "349f3782fcd7d245"
         ],
-        "x": 94,
+        "x": 74,
         "y": 79,
-        "w": 912,
+        "w": 1132,
         "h": 82
     },
     {
@@ -69,7 +70,7 @@
         ],
         "x": 94,
         "y": 579,
-        "w": 1252,
+        "w": 1272,
         "h": 82
     },
     {
@@ -135,7 +136,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 210,
+        "x": 190,
         "y": 120,
         "wires": [
             [
@@ -149,7 +150,7 @@
         "z": "64acc005fd122c55",
         "g": "e7e035e1ccc68925",
         "name": "simpan ke database",
-        "func": "var temperature = msg.payload[0]/10;\nvar humidity = msg.payload[1]/10;\nvar distanceCm = msg.payload[2];\nvar timestamp = Math.floor(Date.now()/1000);\n\n\nif (msg.payload != \"\"){\n    msg.topic = \"INSERT INTO monitoring(temperature, humidity, distance,timestamp) VALUES(\"+temperature+\",\"+humidity+\",\"+distanceCm+\",\"+timestamp+\")\";\n    return msg;\n}",
+        "func": "var temperature = msg.payload[0]/10;\nvar humidity = msg.payload[1]/10;\nvar distanceCm = msg.payload[2];\nvar timestamp = Math.round(Date.now()/1000);\n\n\nif (msg.payload != \"\"){\n    msg.topic = \"INSERT INTO monitoring(temperature, humidity, distance,timestamp) VALUES(\"+temperature+\",\"+humidity+\",\"+distanceCm+\",\"+timestamp+\")\";\n    return msg;\n}",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -165,56 +166,12 @@
         ]
     },
     {
-        "id": "833531f935eac636",
-        "type": "telegram sender",
-        "z": "64acc005fd122c55",
-        "g": "6c690546b7ce4f8d",
-        "name": "",
-        "bot": "bee52fa1e5935705",
-        "haserroroutput": false,
-        "outputs": 1,
-        "x": 1390,
-        "y": 480,
-        "wires": [
-            [
-                "2b41f4c0391493cb"
-            ]
-        ]
-    },
-    {
-        "id": "672fa5ceabbe4533",
-        "type": "telegram command",
-        "z": "64acc005fd122c55",
-        "g": "6c690546b7ce4f8d",
-        "name": "",
-        "command": "/ceksituasi",
-        "description": "",
-        "registercommand": false,
-        "language": "",
-        "scope": "default",
-        "bot": "bee52fa1e5935705",
-        "strict": false,
-        "hasresponse": true,
-        "useregex": false,
-        "removeregexcommand": false,
-        "outputs": 2,
-        "x": 180,
-        "y": 460,
-        "wires": [
-            [
-                "3e1bbcc0e22c4e62",
-                "1401752bedb3b6c4"
-            ],
-            []
-        ]
-    },
-    {
         "id": "5ccc29296d8ab0d4",
         "type": "function",
         "z": "64acc005fd122c55",
         "g": "6c690546b7ce4f8d",
         "name": "membuat pesan telegram",
-        "func": "var temperature = msg.payload[0][0].temperature;\nvar humidity = msg.payload[0][0].humidity;\nvar distanceCm = msg.payload[0][0].distance;\nvar threshold = msg.payload[1][0].threshold;\n\nvar timestamp = new Date(msg.payload[0][0].timestamp*1000);\n\n\nmsg.payload = {\n\"content\" : \"AUTOMATIC WEATHER SYSTEM\\nBootcamp edutic.id batch2\\n\\nSuhu : \"+temperature+\" °C\\nHumidity : \"+humidity+\"%RH\\nJarak air ke permukaan : \"+distanceCm+\" Cm\\nAmbang batas jarak Air: \"+threshold+\" Cm\\nWaktu Setempat: \"+timestamp+\"\",\n\"chatId\" : 1248251919,\n\"type\" : \"message\"\n};\n\nreturn msg;\n\n",
+        "func": "var temperature = msg.payload[0][0].temperature;\nvar humidity = msg.payload[0][0].humidity;\nvar distanceCm = msg.payload[0][0].distance;\nvar threshold = msg.payload[1][0].threshold;\n\nvar timestamp = new Date(msg.payload[0][0].timestamp*1000);\n\n\nmsg.payload = {\n\"content\" : \"AUTOMATIC WEATHER SYSTEM\\n\\nSuhu : \"+temperature+\" °C\\nHumidity : \"+humidity+\" %\\nJarak air ke permukaan : \"+distanceCm+\" Cm\\nAmbang batas jarak Air: \"+threshold+\" Cm\\nWaktu Setempat: \"+timestamp+\"\",\n\"chatId\" : 1248251919,\n\"type\" : \"message\"\n};\n\nreturn msg;\n\n",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
@@ -256,32 +213,6 @@
         "wires": [
             [
                 "976573aa00157f44"
-            ],
-            []
-        ]
-    },
-    {
-        "id": "4f8eea7a8ab9b17f",
-        "type": "telegram command",
-        "z": "64acc005fd122c55",
-        "g": "91ecf4b2f71a414f",
-        "name": "",
-        "command": "/setbatasjarak",
-        "description": "",
-        "registercommand": false,
-        "language": "",
-        "scope": "default",
-        "bot": "bee52fa1e5935705",
-        "strict": false,
-        "hasresponse": true,
-        "useregex": false,
-        "removeregexcommand": false,
-        "outputs": 2,
-        "x": 190,
-        "y": 620,
-        "wires": [
-            [
-                "08bf085b6829354b"
             ],
             []
         ]
@@ -393,6 +324,7 @@
         "key": "payload[0]",
         "joiner": "\\n",
         "joinerType": "str",
+        "useparts": true,
         "accumulate": false,
         "timeout": "",
         "count": "2",
@@ -414,12 +346,14 @@
         "type": "mysql",
         "z": "64acc005fd122c55",
         "g": "e7e035e1ccc68925",
-        "mydb": "b92b8afd826cdbf6",
+        "mydb": "b6c72edb23a2af59",
         "name": "",
         "x": 900,
         "y": 120,
         "wires": [
-            []
+            [
+                "349f3782fcd7d245"
+            ]
         ]
     },
     {
@@ -427,7 +361,7 @@
         "type": "mysql",
         "z": "64acc005fd122c55",
         "g": "91ecf4b2f71a414f",
-        "mydb": "b92b8afd826cdbf6",
+        "mydb": "b6c72edb23a2af59",
         "name": "",
         "x": 620,
         "y": 620,
@@ -442,7 +376,7 @@
         "type": "mysql",
         "z": "64acc005fd122c55",
         "g": "fd757ba2a5e192a7",
-        "mydb": "b92b8afd826cdbf6",
+        "mydb": "b6c72edb23a2af59",
         "name": "",
         "x": 680,
         "y": 820,
@@ -457,7 +391,7 @@
         "type": "mysql",
         "z": "64acc005fd122c55",
         "g": "fd757ba2a5e192a7",
-        "mydb": "b92b8afd826cdbf6",
+        "mydb": "b6c72edb23a2af59",
         "name": "",
         "x": 680,
         "y": 760,
@@ -493,7 +427,7 @@
         "type": "mysql",
         "z": "64acc005fd122c55",
         "g": "6c690546b7ce4f8d",
-        "mydb": "b92b8afd826cdbf6",
+        "mydb": "b6c72edb23a2af59",
         "name": "",
         "x": 720,
         "y": 440,
@@ -542,28 +476,11 @@
         "drop": true,
         "allowrate": false,
         "outputs": 1,
-        "x": 1260,
+        "x": 1240,
         "y": 780,
         "wires": [
             [
                 "1ecb6651688b1727"
-            ]
-        ]
-    },
-    {
-        "id": "1ecb6651688b1727",
-        "type": "telegram sender",
-        "z": "64acc005fd122c55",
-        "g": "fd757ba2a5e192a7",
-        "name": "",
-        "bot": "bee52fa1e5935705",
-        "haserroroutput": false,
-        "outputs": 1,
-        "x": 1450,
-        "y": 780,
-        "wires": [
-            [
-                "1fb95e8e0b99ed30"
             ]
         ]
     },
@@ -585,23 +502,6 @@
         "wires": [
             [
                 "610bee8758b0d1aa"
-            ]
-        ]
-    },
-    {
-        "id": "610bee8758b0d1aa",
-        "type": "telegram sender",
-        "z": "64acc005fd122c55",
-        "g": "91ecf4b2f71a414f",
-        "name": "",
-        "bot": "bee52fa1e5935705",
-        "haserroroutput": false,
-        "outputs": 1,
-        "x": 1070,
-        "y": 620,
-        "wires": [
-            [
-                "ab207fa3fb69eb5e"
             ]
         ]
     },
@@ -635,7 +535,7 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 1240,
+        "x": 1260,
         "y": 620,
         "wires": []
     },
@@ -682,7 +582,7 @@
         "type": "mysql",
         "z": "64acc005fd122c55",
         "g": "6c690546b7ce4f8d",
-        "mydb": "b92b8afd826cdbf6",
+        "mydb": "b6c72edb23a2af59",
         "name": "",
         "x": 720,
         "y": 500,
@@ -705,6 +605,7 @@
         "key": "topic",
         "joiner": "\\n",
         "joinerType": "str",
+        "useparts": true,
         "accumulate": false,
         "timeout": "",
         "count": "2",
@@ -774,6 +675,97 @@
         ]
     },
     {
+        "id": "95ca4ffbc37e5782",
+        "type": "function",
+        "z": "64acc005fd122c55",
+        "g": "2e27690dcbb01c8e",
+        "name": "pesan untuk guide user",
+        "func": "msg.payload = {\n    \"chatId\" : 1248251919,\n    \"type\" : \"message\",\n    \"content\" : \"AUTOMATIC WEATHER SYSTEM \\n\\nGunakan perintah berikut:\\n\\n/ceksituasi untuk mendapatkan informasi tentang data pembacaan sensor \\n\\n/setbatasjarak (spasi)(nilai dalam satuan Cm) untuk merubah nilai ambang batas jarak air dengan permukaan sungai\"\n\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "645f31908d16f133"
+            ]
+        ]
+    },
+    {
+        "id": "eea48c1df230d12a",
+        "type": "debug",
+        "z": "64acc005fd122c55",
+        "g": "2e27690dcbb01c8e",
+        "name": "debug 6",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "672fa5ceabbe4533",
+        "type": "telegram command",
+        "z": "64acc005fd122c55",
+        "g": "6c690546b7ce4f8d",
+        "name": "",
+        "command": "/ceksituasi",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "bee52fa1e5935705",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 180,
+        "y": 460,
+        "wires": [
+            [
+                "3e1bbcc0e22c4e62",
+                "1401752bedb3b6c4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4f8eea7a8ab9b17f",
+        "type": "telegram command",
+        "z": "64acc005fd122c55",
+        "g": "91ecf4b2f71a414f",
+        "name": "",
+        "command": "/setbatas",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "scope": "default",
+        "bot": "bee52fa1e5935705",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 180,
+        "y": 620,
+        "wires": [
+            [
+                "08bf085b6829354b"
+            ],
+            []
+        ]
+    },
+    {
         "id": "a346e525378109f4",
         "type": "telegram command",
         "z": "64acc005fd122c55",
@@ -800,23 +792,53 @@
         ]
     },
     {
-        "id": "95ca4ffbc37e5782",
-        "type": "function",
+        "id": "833531f935eac636",
+        "type": "telegram sender",
         "z": "64acc005fd122c55",
-        "g": "2e27690dcbb01c8e",
-        "name": "pesan untuk guide user",
-        "func": "msg.payload = {\n    \"chatId\" : 1248251919,\n    \"type\" : \"message\",\n    \"content\" : \"AUTOMATIC WEATHER SYSTEM \\nBootcamp Edutic.id Batch 2 \\n\\nGunakan perintah berikut:\\n\\n/ceksituasi untuk mendapatkan informasi tentang data pembacaan sensor \\n\\n/setbatasjarak (spasi)(nilai dalam satuan Cm) untuk merubah nilai ambang batas jarak air dengan permukaan sungai\"\n\n};\nreturn msg;",
+        "g": "6c690546b7ce4f8d",
+        "name": "",
+        "bot": "bee52fa1e5935705",
+        "haserroroutput": false,
         "outputs": 1,
-        "timeout": 0,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 430,
-        "y": 280,
+        "x": 1390,
+        "y": 480,
         "wires": [
             [
-                "645f31908d16f133"
+                "2b41f4c0391493cb"
+            ]
+        ]
+    },
+    {
+        "id": "1ecb6651688b1727",
+        "type": "telegram sender",
+        "z": "64acc005fd122c55",
+        "g": "fd757ba2a5e192a7",
+        "name": "",
+        "bot": "bee52fa1e5935705",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1450,
+        "y": 780,
+        "wires": [
+            [
+                "1fb95e8e0b99ed30"
+            ]
+        ]
+    },
+    {
+        "id": "610bee8758b0d1aa",
+        "type": "telegram sender",
+        "z": "64acc005fd122c55",
+        "g": "91ecf4b2f71a414f",
+        "name": "",
+        "bot": "bee52fa1e5935705",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 1070,
+        "y": 620,
+        "wires": [
+            [
+                "ab207fa3fb69eb5e"
             ]
         ]
     },
@@ -838,11 +860,11 @@
         ]
     },
     {
-        "id": "eea48c1df230d12a",
+        "id": "349f3782fcd7d245",
         "type": "debug",
         "z": "64acc005fd122c55",
-        "g": "2e27690dcbb01c8e",
-        "name": "debug 6",
+        "g": "e7e035e1ccc68925",
+        "name": "debug 7",
         "active": true,
         "tosidebar": true,
         "console": false,
@@ -850,19 +872,60 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 860,
-        "y": 280,
+        "x": 1100,
+        "y": 120,
         "wires": []
+    },
+    {
+        "id": "73b34ca166045d79",
+        "type": "modbus-client",
+        "name": "",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.1.254",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "COM3",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "1",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "b6c72edb23a2af59",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "aws_database",
+        "tz": "",
+        "charset": "UTF8"
     },
     {
         "id": "bee52fa1e5935705",
         "type": "telegram bot",
-        "botname": "Bot_coba2",
+        "botname": "aws_edutic_bot",
         "usernames": "",
         "chatids": "",
         "baseapiurl": "",
         "testenvironment": false,
         "updatemode": "polling",
+        "addressfamily": "",
         "pollinterval": "300",
         "usesocks": false,
         "sockshost": "",
@@ -879,44 +942,5 @@
         "useselfsignedcertificate": false,
         "sslterminated": false,
         "verboselogging": false
-    },
-    {
-        "id": "73b34ca166045d79",
-        "type": "modbus-client",
-        "name": "",
-        "clienttype": "serial",
-        "bufferCommands": true,
-        "stateLogEnabled": false,
-        "queueLogEnabled": false,
-        "failureLogEnabled": true,
-        "tcpHost": "127.0.0.1",
-        "tcpPort": "502",
-        "tcpType": "DEFAULT",
-        "serialPort": "COM7",
-        "serialType": "RTU-BUFFERD",
-        "serialBaudrate": "9600",
-        "serialDatabits": "8",
-        "serialStopbits": "1",
-        "serialParity": "none",
-        "serialConnectionDelay": "100",
-        "serialAsciiResponseStartDelimiter": "0x3A",
-        "unit_id": "1",
-        "commandDelay": "1",
-        "clientTimeout": "1000",
-        "reconnectOnTimeout": true,
-        "reconnectTimeout": "2000",
-        "parallelUnitIdsAllowed": true,
-        "showWarnings": true,
-        "showLogs": true
-    },
-    {
-        "id": "b92b8afd826cdbf6",
-        "type": "MySQLdatabase",
-        "name": "",
-        "host": "127.0.0.1",
-        "port": "3306",
-        "db": "aws_database",
-        "tz": "",
-        "charset": "UTF8"
     }
 ]
