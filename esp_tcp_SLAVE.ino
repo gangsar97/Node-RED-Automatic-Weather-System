@@ -2,6 +2,36 @@
 #include <WiFi.h>
 #include <ModbusIP_ESP8266.h>
 
+// DHT11 config
+#define DHTPIN 27
+#define DHTTYPE DHT11
+
+// modbus data address
+#define SLAVE_ID 1
+#define IReg_temp_address 1
+#define IReg_hum_address 2
+#define IReg_dist_address 3
+
+//ultrasonic HCSR04 config
+#define trigger 14
+#define echo 12
+
+//wifi parameter
+const char* ssid = "academy.edutic.id";
+const char* password = "academy.edutic.id";
+
+
+//static ip parameter
+byte mac[] = {
+  0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
+};
+
+IPAddress ip(192, 168, 1, 254);
+IPAddress gateway(192, 168, 1, 1);
+IPAddress netmask(255, 255, 255, 0);
+IPAddress dns(8, 8, 8, 8);
+
+
 class HCSR04 {
   private:
     byte _trigPin;
@@ -34,38 +64,15 @@ class HCSR04 {
 };
 
 
-// DHT11 config
-#define DHTPIN 27
-#define DHTTYPE DHT11
-
-// modbus data address
-#define SLAVE_ID 1
-#define IReg_temp_address 1
-#define IReg_hum_address 2
-#define IReg_dist_address 3
-
-//ultrasonic HCSR04 config
-#define triggerPin 14
-#define echoPin 12
-
-HCSR04 ultrasonic(triggerPin, echoPin);
+HCSR04 ultrasonic(trigger, echo);
 ModbusIP modbus;
 DHT dht(DHTPIN, DHTTYPE);
-
-byte mac[] = {
-  0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED
-};
-
-IPAddress ip(192, 168, 1, 254);
-IPAddress netmask(255, 255, 255, 0);
-IPAddress gateway(192, 168, 1, 1);
-IPAddress dns(8, 8, 8, 8);
 
 
 void setup() {
   Serial.begin(115200);
   WiFi.config(ip, gateway,netmask,dns);
-  WiFi.begin("Edutic.id", "Edutic5758-");
+  WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
