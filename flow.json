@@ -346,7 +346,7 @@
         "type": "mysql",
         "z": "64acc005fd122c55",
         "g": "e7e035e1ccc68925",
-        "mydb": "",
+        "mydb": "a12b21964a3d429c",
         "name": "",
         "x": 890,
         "y": 160,
@@ -875,5 +875,15 @@
         "x": 1120,
         "y": 160,
         "wires": []
+    },
+    {
+        "id": "a12b21964a3d429c",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "edutic",
+        "tz": "",
+        "charset": "UTF8"
     }
 ]
