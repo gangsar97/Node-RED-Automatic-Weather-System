@@ -8,7 +8,3 @@ MODBUS ADDRESS
 2 = Humidity
 3 = distance ( Cm )
 
-
-
-Materi untuk Bootcamp Industrial Internet of Things by [edutic.id](https://edutic.id/)
-
